@@ -35,8 +35,12 @@ st.sidebar.write("Este chatbot usa a API Groq com o modelo LLaMA.")
 st.title("🤖 Chatbot Inteligente com Groq API")
 st.write("**Faça uma pergunta para o chatbot abaixo!**")
 
+# Verificar se o estado da caixa de texto foi inicializado
+if 'user_input' not in st.session_state:
+    st.session_state['user_input'] = ''
+
 # Caixa de entrada para o usuário
-user_input = st.text_input("Digite sua pergunta aqui:", "")
+user_input = st.text_input("Digite sua pergunta aqui:", st.session_state['user_input'])
 
 # Estilo da caixa de resposta
 st.markdown("<hr>", unsafe_allow_html=True)
@@ -46,5 +50,8 @@ if st.button("Enviar"):
     if user_input:
         response = chatbot_response(user_input)
         st.success(f"Chatbot: {response}")
+        
+        # Limpar o valor da caixa de entrada após enviar a mensagem
+        st.session_state['user_input'] = ''
     else:
         st.warning("Por favor, insira uma pergunta.")
