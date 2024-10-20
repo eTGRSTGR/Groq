@@ -31,23 +31,27 @@ st.set_page_config(page_title="Chatbot com Groq API", page_icon="🤖", layout="
 st.sidebar.title("Opções do Chatbot")
 st.sidebar.write("Este chatbot usa a API Groq com o modelo LLaMA.")
 
+# Ajustar o título e descrição principal
+st.title("🤖 Chatbot Inteligente com Groq API")
+st.write("**Faça uma pergunta para o chatbot abaixo!**")
+
 # Verificar se o estado da caixa de texto foi inicializado
 if 'user_input' not in st.session_state:
     st.session_state['user_input'] = ''
 
 # Caixa de entrada para o usuário
-user_input = st.text_input("Digite sua pergunta aqui:", key="user_input")
+user_input = st.text_input("Digite sua pergunta aqui:", st.session_state['user_input'])
 
 # Estilo da caixa de resposta
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # Exibir resposta quando o usuário enviar uma mensagem
 if st.button("Enviar"):
-    if st.session_state.user_input:
-        response = chatbot_response(st.session_state.user_input)
+    if user_input:
+        response = chatbot_response(user_input)
         st.success(f"Chatbot: {response}")
         
-        # Limpar a caixa de texto após enviar a mensagem
+        # Limpar o valor da caixa de entrada após enviar a mensagem
         st.session_state['user_input'] = ''
     else:
         st.warning("Por favor, insira uma pergunta.")
