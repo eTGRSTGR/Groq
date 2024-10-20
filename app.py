@@ -24,6 +24,10 @@ def chatbot_response(user_input):
     )
     return chat_completion.choices[0].message.content
 
+# Função para limpar o campo de texto
+def clear_input():
+    st.session_state['user_input'] = ''  # Limpa o valor armazenado no campo
+
 # Customizar o layout
 st.set_page_config(page_title="Chatbot com Groq API", page_icon="🤖", layout="wide")
 
@@ -51,7 +55,7 @@ if st.button("Enviar"):
         response = chatbot_response(user_input)
         st.success(f"Chatbot: {response}")
         
-        # Limpar o valor da caixa de entrada após enviar a mensagem
-        st.session_state['user_input'] = ''
+        # Limpar o campo de entrada após o envio da mensagem
+        clear_input()
     else:
         st.warning("Por favor, insira uma pergunta.")
